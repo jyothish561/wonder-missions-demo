@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: 15 23% 12%;
+  --muted: 215 16% 47%;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: rgb(15 23 42);
+  background: white;
+}
