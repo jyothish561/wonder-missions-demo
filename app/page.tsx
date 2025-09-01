@@ -267,10 +267,15 @@ export default function WonderMissionsDemo() {
 					</div>
 				  </div>
 
-				  <div className="text-xs md:text-sm text-slate-600">
-					Completed: <span className="font-semibold">{totalCompleted}</span> ·
-					Streak: <span className="font-semibold">{streak} day{streak === 1 ? "" : "s"}</span>
-				  </div>
+					<div className="text-right text-xs md:text-sm text-slate-600 leading-tight">
+					  <div>
+						Completed: <span className="font-semibold">{totalCompleted}</span>
+					  </div>
+					  <div>
+						Streak: <span className="font-semibold">{streak} day{streak === 1 ? "" : "s"}</span>
+					  </div>
+					</div>
+
 				</div>
 
 
