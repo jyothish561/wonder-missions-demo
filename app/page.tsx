@@ -1,7 +1,11 @@
 'use client'
+
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FlaskConical, Sparkles, ChevronRight, CheckCircle2, Leaf, Rocket, Shield, Lightbulb, ArrowLeft, Award } from "lucide-react";
+import {
+  FlaskConical, Sparkles, ChevronRight, CheckCircle2, Leaf, Rocket,
+  Shield, Lightbulb, ArrowLeft, Award, Trophy, Flame
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -159,18 +163,6 @@ function badgeList(totalCompleted: number, streak: number) {
   return out;
 }
 
-const Icon = ({ kind }: { kind: Mission["icon"] }) => {
-  const base = "w-5 h-5";
-  switch (kind) {
-    case "flask":
-      return <FlaskConical className={base} />;
-    case "leaf":
-      return <Leaf className={base} />;
-    case "rocket":
-      return <Rocket className={base} />;
-  }
-};
-
 export default function WonderMissionsDemo() {
   const [view, setView] = useState<"list" | "detail" | "progress">("list");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -195,7 +187,7 @@ export default function WonderMissionsDemo() {
   const streak = calculateCurrentStreak(dates);
   const badges = badgeList(totalCompleted, streak);
 
-  const selected = MISSIONS.find((m) => m.id == selectedId) || null;
+  const selected = MISSIONS.find((m) => m.id === selectedId) || null;
 
   function completeMission(mid: string) {
     if (completedMissionIds.has(mid)) return;
@@ -211,6 +203,7 @@ export default function WonderMissionsDemo() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white text-slate-800">
+      {/* Sticky header */}
       <div className="sticky top-0 z-10 backdrop-blur bg-white/70 border-b">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -219,7 +212,7 @@ export default function WonderMissionsDemo() {
             </div>
             <div>
               <div className="font-semibold text-lg">Wonder Missions</div>
-              <div className="text-xs text-slate-500">Bite‑size STEM adventures (ages 6–11)</div>
+              <div className="text-xs text-slate-500">Bite-size STEM adventures (ages 6–11)</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -229,6 +222,7 @@ export default function WonderMissionsDemo() {
         </div>
       </div>
 
+      {/* Safety card */}
       <div className="max-w-5xl mx-auto px-4 mt-6">
         <Card className="border-indigo-100 shadow-sm">
           <CardContent className="p-4 sm:p-6 flex items-center justify-between gap-4">
@@ -240,12 +234,13 @@ export default function WonderMissionsDemo() {
               </div>
             </div>
             <div className="hidden sm:block">
-              <Badge className="bg-emerald-600 text-white">Curated & kid‑safe</Badge>
+              <Badge className="bg-emerald-600 text-white">Curated & kid-safe</Badge>
             </div>
           </CardContent>
         </Card>
       </div>
 
+      {/* Main body */}
       <div className="max-w-5xl mx-auto px-4 py-6">
         <AnimatePresence mode="wait">
           {view === "list" && (
@@ -256,29 +251,41 @@ export default function WonderMissionsDemo() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
             >
-				<div className="mb-4 flex items-end justify-between">
-				  <div className="flex items-center gap-2">
-					<span className="p-1.5 rounded-md bg-indigo-50 text-indigo-700">
-					  <Sparkles className="w-4 h-4" />
-					</span>
-					<div>
-					  <div className="text-lg md:text-xl font-semibold text-slate-800">Choose a mission</div>
-					  <div className="text-xs text-slate-500">Start your next mini-adventure</div>
-					</div>
-				  </div>
+              {/* Header row with score tiles */}
+              <div className="mb-4 flex items-end justify-between">
+                {/* LEFT: title + subtitle */}
+                <div className="flex items-center gap-2">
+                  <span className="p-1.5 rounded-md bg-indigo-50 text-indigo-700">
+                    <Sparkles className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <div className="text-lg md:text-xl font-semibold text-slate-800">Choose a mission</div>
+                    <div className="text-xs text-slate-500">Start your next mini-adventure</div>
+                  </div>
+                </div>
 
-					<div className="text-right text-xs md:text-sm text-slate-600 leading-tight">
-					  <div>
-						Completed: <span className="font-semibold">{totalCompleted}</span>
-					  </div>
-					  <div>
-						Streak: <span className="font-semibold">{streak} day{streak === 1 ? "" : "s"}</span>
-					  </div>
-					</div>
+                {/* RIGHT: score tiles */}
+                <div className="flex items-stretch gap-2">
+                  <div className="rounded-xl border bg-white px-3 py-2 text-right shadow-sm">
+                    <div className="text-[10px] font-medium tracking-wide text-slate-500 uppercase">Completed</div>
+                    <div className="flex items-center justify-end gap-1 leading-none">
+                      <Trophy className="w-4 h-4 text-amber-500" />
+                      <span className="text-xl font-bold tabular-nums">{totalCompleted}</span>
+                    </div>
+                  </div>
 
-				</div>
+                  <div className="rounded-xl border bg-white px-3 py-2 text-right shadow-sm">
+                    <div className="text-[10px] font-medium tracking-wide text-slate-500 uppercase">Streak</div>
+                    <div className="flex items-center justify-end gap-1 leading-none">
+                      <Flame className="w-4 h-4 text-rose-500" />
+                      <span className="text-xl font-bold tabular-nums">{streak}</span>
+                      <span className="text-[11px] text-slate-500">day{streak === 1 ? "" : "s"}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-
+              {/* Mission cards */}
               <div className="grid md:grid-cols-2 gap-4">
                 {MISSIONS.map((m) => (
                   <Card key={m.id} className="hover:shadow-md transition-shadow">
@@ -289,7 +296,9 @@ export default function WonderMissionsDemo() {
                         </span>
                         {m.title}
                         {completedMissionIds.has(m.id) && (
-                          <Badge className="ml-auto bg-indigo-600 text-white flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> Done</Badge>
+                          <Badge className="ml-auto bg-indigo-600 text-white flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4" /> Done
+                          </Badge>
                         )}
                       </CardTitle>
                     </CardHeader>
@@ -320,7 +329,12 @@ export default function WonderMissionsDemo() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
             >
-              <button className="mb-3 inline-flex items-center text-sm text-slate-600 hover:text-slate-800" onClick={() => setView("list")}> <ArrowLeft className="w-4 h-4 mr-1" /> Back to missions</button>
+              <button
+                className="mb-3 inline-flex items-center text-sm text-slate-600 hover:text-slate-800"
+                onClick={() => setView("list")}
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" /> Back to missions
+              </button>
 
               <Card className="shadow-sm">
                 <CardHeader>
@@ -375,13 +389,16 @@ export default function WonderMissionsDemo() {
                       </div>
                     </div>
 
+                    {/* Hints */}
                     <div className="md:col-span-1">
                       <div className="rounded-2xl border bg-gradient-to-b from-indigo-50 to-white p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Lightbulb className="w-5 h-5 text-indigo-700" />
                           <div className="font-semibold">AI Lab Buddy (Hints)</div>
                         </div>
-                        <div className="text-xs text-slate-600 mb-3">Hints are limited to this mission to keep things safe and on-topic.</div>
+                        <div className="text-xs text-slate-600 mb-3">
+                          Hints are limited to this mission to keep things safe and on-topic.
+                        </div>
                         <div className="text-sm p-3 rounded-lg bg-white border min-h-[72px]">
                           {selected.hints[hintIndex]}
                         </div>
@@ -414,11 +431,18 @@ export default function WonderMissionsDemo() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
             >
-              <button className="mb-3 inline-flex items-center text-sm text-slate-600 hover:text-slate-800" onClick={() => setView("list")}> <ArrowLeft className="w-4 h-4 mr-1" /> Back to missions</button>
+              <button
+                className="mb-3 inline-flex items-center text-sm text-slate-600 hover:text-slate-800"
+                onClick={() => setView("list")}
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" /> Back to missions
+              </button>
 
               <div className="grid lg:grid-cols-3 gap-4">
                 <Card>
-                  <CardHeader className="pb-2"><CardTitle className="text-base">Overview</CardTitle></CardHeader>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">Overview</CardTitle>
+                  </CardHeader>
                   <CardContent>
                     <div className="text-sm text-slate-600">Missions completed</div>
                     <div className="text-3xl font-semibold">{totalCompleted}</div>
@@ -428,14 +452,23 @@ export default function WonderMissionsDemo() {
                 </Card>
 
                 <Card className="lg:col-span-2">
-                  <CardHeader className="pb-2"><CardTitle className="text-base">Badges</CardTitle></CardHeader>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">Badges</CardTitle>
+                  </CardHeader>
                   <CardContent>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                       {badges.map((b) => (
-                        <div key={b.id} className={`rounded-xl border p-3 flex items-start gap-3 ${b.earned ? "bg-indigo-50 border-indigo-200" : "bg-white"}`}>
-                          <div className={`p-2 rounded-lg ${b.earned ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-600"}`}>{b.icon}</div>
+                        <div
+                          key={b.id}
+                          className={`rounded-xl border p-3 flex items-start gap-3 ${b.earned ? "bg-indigo-50 border-indigo-200" : "bg-white"}`}
+                        >
+                          <div className={`p-2 rounded-lg ${b.earned ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-600"}`}>
+                            {b.icon}
+                          </div>
                           <div>
-                            <div className="font-semibold text-sm flex items-center gap-2">{b.name} {b.earned && <CheckCircle2 className="w-4 h-4 text-indigo-700" />}</div>
+                            <div className="font-semibold text-sm flex items-center gap-2">
+                              {b.name} {b.earned && <CheckCircle2 className="w-4 h-4 text-indigo-700" />}
+                            </div>
                             <div className="text-xs text-slate-600">{b.desc}</div>
                           </div>
                         </div>
@@ -445,9 +478,11 @@ export default function WonderMissionsDemo() {
                 </Card>
 
                 <Card className="lg:col-span-3">
-                  <CardHeader className="pb-2"><CardTitle className="text-base">History</CardTitle></CardHeader>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">History</CardTitle>
+                  </CardHeader>
                   <CardContent>
-                    {progress.length == 0 ? (
+                    {progress.length === 0 ? (
                       <div className="text-sm text-slate-600">No missions completed yet.</div>
                     ) : (
                       <div className="space-y-2">
@@ -459,13 +494,17 @@ export default function WonderMissionsDemo() {
                             return (
                               <div key={i} className="flex items-center justify-between text-sm border rounded-lg p-2">
                                 <div className="flex items-center gap-2">
-                                  <span className="p-1.5 rounded-lg bg-slate-100">{m.icon === "flask" ? <FlaskConical className="w-4 h-4" /> : m.icon === "leaf" ? <Leaf className="w-4 h-4" /> : <Rocket className="w-4 h-4" />}</span>
+                                  <span className="p-1.5 rounded-lg bg-slate-100">
+                                    {m.icon === "flask" ? <FlaskConical className="w-4 h-4" /> : m.icon === "leaf" ? <Leaf className="w-4 h-4" /> : <Rocket className="w-4 h-4" />}
+                                  </span>
                                   <div>
                                     <div className="font-medium">{m.title}</div>
                                     <div className="text-xs text-slate-500">Completed {r.completedAtISO}</div>
                                   </div>
                                 </div>
-                                <Button size="sm" variant="outline" onClick={() => { setSelectedId(m.id); setView("detail"); }}>View</Button>
+                                <Button size="sm" variant="outline" onClick={() => { setSelectedId(m.id); setView("detail"); }}>
+                                  View
+                                </Button>
                               </div>
                             );
                           })}
@@ -483,6 +522,7 @@ export default function WonderMissionsDemo() {
         </AnimatePresence>
       </div>
 
+      {/* Footer */}
       <div className="max-w-5xl mx-auto px-4 pb-8 text-xs text-slate-500">
         This is a local, no-backend demo. In a real build, parent login, secure storage, video, and push notifications would be added.
       </div>
