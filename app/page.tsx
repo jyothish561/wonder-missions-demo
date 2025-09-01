@@ -216,8 +216,8 @@ export default function WonderMissionsDemo() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant={view === "list" ? "default" : "ghost"} onClick={() => setView("list")}>Missions</Button>
-            <Button variant={view === "progress" ? "default" : "ghost"} onClick={() => setView("progress")}>Progress</Button>
+            <Button  className="font-semibold" variant={view === "list" ? "default" : "ghost"} onClick={() => setView("list")}>Missions</Button>
+            <Button  className="font-semibold" variant={view === "progress" ? "default" : "ghost"} onClick={() => setView("progress")}>Progress</Button>
           </div>
         </div>
       </div>
