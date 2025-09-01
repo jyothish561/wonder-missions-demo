@@ -295,17 +295,34 @@ export default function WonderMissionsDemo() {
                 {MISSIONS.map((m) => (
                   <Card key={m.id} className="hover:shadow-md transition-shadow">
                     <CardHeader className="pb-2">
-                      <CardTitle className="flex items-center gap-2 text-base">
-                        <span className="p-2 rounded-xl bg-indigo-50 text-indigo-700">
-                          {m.icon === "flask" ? <FlaskConical className="w-5 h-5" /> : m.icon === "leaf" ? <Leaf className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
-                        </span>
-                        {m.title}
-                        {completedMissionIds.has(m.id) && (
-                          <Badge className="ml-auto bg-indigo-600 text-white flex items-center gap-1">
-                            <CheckCircle2 className="w-4 h-4" /> Done
-                          </Badge>
-                        )}
-                      </CardTitle>
+						<CardTitle className="flex items-center gap-2 text-base">
+						  <span className="p-2 rounded-xl bg-indigo-50 text-indigo-700">
+							{m.icon === "flask" ? <FlaskConical className="w-5 h-5" /> : m.icon === "leaf" ? <Leaf className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
+						  </span>
+
+						  {/* colourful, sparkling title */}
+						  <span className="relative">
+							<span className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 bg-clip-text text-transparent font-semibold">
+							  {m.title}
+							</span>
+							<motion.span
+							  initial={{ opacity: 0, scale: 0.8, y: -2 }}
+							  animate={{ opacity: [0, 1, 0.6, 1], scale: [0.8, 1, 0.9, 1] }}
+							  transition={{ repeat: Infinity, duration: 2.6, ease: "easeInOut" }}
+							  className="absolute -top-2 -right-3 text-yellow-400"
+							>
+							  <Sparkles className="w-3.5 h-3.5" />
+							</motion.span>
+						  </span>
+
+						  {/* keep the Done badge on the far right when present */}
+						  {completedMissionIds.has(m.id) && (
+							<Badge className="ml-auto bg-indigo-600 text-white flex items-center gap-1">
+							  <CheckCircle2 className="w-4 h-4" /> Done
+							</Badge>
+						  )}
+						</CardTitle>
+
                     </CardHeader>
                     <CardContent className="pt-0 text-sm">
                       <div className="text-slate-600">{m.summary}</div>
@@ -343,12 +360,26 @@ export default function WonderMissionsDemo() {
 
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <span className="p-2 rounded-xl bg-indigo-50 text-indigo-700">
-                      {selected.icon === "flask" ? <FlaskConical className="w-5 h-5" /> : selected.icon === "leaf" ? <Leaf className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
-                    </span>
-                    {selected.title}
-                  </CardTitle>
+					<CardTitle className="flex items-center gap-2">
+					  <span className="p-2 rounded-xl bg-indigo-50 text-indigo-700">
+						{selected.icon === "flask" ? <FlaskConical className="w-5 h-5" /> : selected.icon === "leaf" ? <Leaf className="w-5 h-5" /> : <Rocket className="w-5 h-5" />}
+					  </span>
+
+					  <span className="relative">
+						<span className="bg-gradient-to-r from-fuchsia-500 via-rose-500 to-indigo-600 bg-clip-text text-transparent font-extrabold">
+						  {selected.title}
+						</span>
+						<motion.span
+						  initial={{ opacity: 0, scale: 0.8, x: -4, y: -3 }}
+						  animate={{ opacity: [0, 1, 0.6, 1], scale: [0.8, 1, 0.9, 1], x: [-4, 0, -2, 0], y: [-3, 0, -1, 0] }}
+						  transition={{ repeat: Infinity, duration: 3.0, ease: "easeInOut" }}
+						  className="absolute -top-2 -right-3 text-cyan-400"
+						>
+						  <Sparkles className="w-3.5 h-3.5" />
+						</motion.span>
+					  </span>
+					</CardTitle>
+
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-3 gap-6">
