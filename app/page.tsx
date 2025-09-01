@@ -256,10 +256,23 @@ export default function WonderMissionsDemo() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="mb-4 flex items-center justify-between">
-                <div className="text-sm text-slate-600">Choose a mission to begin</div>
-                <div className="text-sm">Completed: <span className="font-semibold">{totalCompleted}</span> · Streak: <span className="font-semibold">{streak} day{streak === 1 ? "" : "s"}</span></div>
-              </div>
+				<div className="mb-4 flex items-end justify-between">
+				  <div className="flex items-center gap-2">
+					<span className="p-1.5 rounded-md bg-indigo-50 text-indigo-700">
+					  <Sparkles className="w-4 h-4" />
+					</span>
+					<div>
+					  <div className="text-lg md:text-xl font-semibold text-slate-800">Choose a mission</div>
+					  <div className="text-xs text-slate-500">Start your next mini-adventure</div>
+					</div>
+				  </div>
+
+				  <div className="text-xs md:text-sm text-slate-600">
+					Completed: <span className="font-semibold">{totalCompleted}</span> ·
+					Streak: <span className="font-semibold">{streak} day{streak === 1 ? "" : "s"}</span>
+				  </div>
+				</div>
+
 
               <div className="grid md:grid-cols-2 gap-4">
                 {MISSIONS.map((m) => (
