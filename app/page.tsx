@@ -210,10 +210,15 @@ export default function WonderMissionsDemo() {
             <div className="p-2 rounded-xl bg-indigo-100 text-indigo-700">
               <Sparkles className="w-5 h-5" />
             </div>
-            <div>
-              <div className="font-semibold text-lg">Wonder Missions</div>
-              <div className="text-xs text-slate-500">Bite-size STEM adventures (ages 6–11)</div>
-            </div>
+				<div className="relative">
+				  <div className="text-lg md:text-xl font-extrabold tracking-tight
+								  bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600
+								  bg-clip-text text-transparent drop-shadow">
+					Wonder Missions
+				  </div>
+				  <div className="text-xs text-slate-600">Bite-size STEM adventures (ages 6–11)</div>
+				</div>
+
           </div>
           <div className="flex items-center gap-2">
             <Button  className="font-semibold" variant={view === "list" ? "default" : "ghost"} onClick={() => setView("list")}>Missions</Button>
